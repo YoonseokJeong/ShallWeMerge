@@ -1,8 +1,9 @@
-package com.example.project_2nd_week.Login;
+package com.example.project_2nd_week.login;
 
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,7 +16,9 @@ import androidx.databinding.DataBindingUtil;
 
 import com.example.project_2nd_week.MainActivity;
 import com.example.project_2nd_week.R;
+import com.example.project_2nd_week.Util;
 import com.example.project_2nd_week.databinding.ActicityLoginBinding;
+import com.example.project_2nd_week.login.signup.SignUpActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,10 +28,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActicity extends AppCompatActivity {
 
+
     private ActicityLoginBinding binding;
     private KakaoLoginLogoutManager manager = new KakaoLoginLogoutManager(this);
 
-    String url = "https://c40f-192-249-18-219.jp.ngrok.io";
+    String url = "https://c20b-192-249-18-219.jp.ngrok.io";
 
      Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(url)
@@ -36,17 +40,33 @@ public class LoginActicity extends AppCompatActivity {
             .build();
      LoginAPI loginAPI = retrofit.create(LoginAPI.class);
 
-
+    private LoginActicity getContext(){
+        return this;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.acticity_login);
         Intent intent = new Intent(this, MainActivity.class);
 
+        //Edit Text Input 제한
+        binding.idEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10), new Util.CustomInputFilter()});
+        binding.idEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+
+
         binding.kakaoLoginButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view){
                 manager.signInKakao();
+
+            }
+        });
+
+        binding.toSignUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(getContext(), SignUpActivity.class);
+                intent.putExtra("data","Test Popup"); startActivityForResult(intent, 1);
 
             }
         });

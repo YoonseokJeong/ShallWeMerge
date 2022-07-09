@@ -1,8 +1,7 @@
-package com.example.project_2nd_week.Login;
+package com.example.project_2nd_week.login;
 
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;

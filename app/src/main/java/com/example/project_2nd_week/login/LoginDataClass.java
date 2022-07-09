@@ -1,4 +1,4 @@
-package com.example.project_2nd_week.Login;
+package com.example.project_2nd_week.login;
 
 import com.google.gson.annotations.SerializedName;
 
