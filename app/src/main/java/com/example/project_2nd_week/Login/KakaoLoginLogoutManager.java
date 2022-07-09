@@ -1,4 +1,4 @@
-package com.example.project_2nd_week.KakaoLogin;
+package com.example.project_2nd_week.Login;
 
 import android.app.Activity;
 import android.util.Log;
@@ -13,6 +13,7 @@ import kotlin.jvm.functions.Function2;
 public class KakaoLoginLogoutManager {
 
     private final Activity activity;
+    private String id;
 
     public KakaoLoginLogoutManager(Activity activity) {
         this.activity = activity;
@@ -31,7 +32,7 @@ public class KakaoLoginLogoutManager {
      */
     Function2<OAuthToken, Throwable, Unit> callback = (oAuthToken, throwable) -> {
         if (oAuthToken != null) {
-            Log.i("[카카오] 로그인", "성공");
+            Log.i("[카카오] 로그인", "성공 " + oAuthToken.toString());
             updateKakaoLogin();
         }
         if (throwable != null) {

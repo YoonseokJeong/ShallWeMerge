@@ -1,4 +1,4 @@
-package com.example.project_2nd_week.KakaoLogin;
+package com.example.project_2nd_week.Login;
 
 import android.app.Application;
 
