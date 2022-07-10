@@ -1,4 +1,4 @@
-package com.example.project_2nd_week.login;
+package com.example.shall_we_merge.login;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -12,9 +12,12 @@ public class LoginDataClass {
     @SerializedName("password")
     private String password;
 
-    public LoginDataClass(String id, String pw){
-        this.id = id;
-        this.password = pw;
+    public void setId(String newId){
+        this.id = newId;
+    }
+
+    public void setPassword(String newPw){
+        this.password = newPw;
     }
 
     /*public String getName(){

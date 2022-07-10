@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.project_2nd_week">
+    package="com.example.shall_we_merge">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -15,12 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project_2nd_week"
         android:usesCleartextTraffic="true"
-        android:name=".login.KakaoApplication"
+        android:name="com.example.shall_we_merge.login.KakaoApplication"
         tools:targetApi="31">
 
 
         <activity
-            android:name=".login.LoginActicity"
+            android:name="com.example.shall_we_merge.login.LoginActicity"
             android:exported="true">
 
             <intent-filter>
@@ -33,7 +34,7 @@
         </activity>
 
         <activity
-            android:name=".login.signup.SignUpActivity"
+            android:name="com.example.shall_we_merge.login.signup.SignUpActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Dialog" />
 
@@ -53,7 +54,7 @@
 
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.shall_we_merge.MainActivity"
             android:exported="true">
         </activity>
     </application>

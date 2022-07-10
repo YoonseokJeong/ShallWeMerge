@@ -1,9 +1,5 @@
-package com.example.project_2nd_week.login.signup;
+package com.example.shall_we_merge.login.signup;
 
-import android.text.method.TransformationMethod;
-
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;

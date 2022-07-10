@@ -1,4 +1,4 @@
-package com.example.project_2nd_week.login;
+package com.example.shall_we_merge.login;
 
 import android.content.Intent;
 import android.graphics.Rect;
@@ -14,11 +14,15 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.example.project_2nd_week.MainActivity;
-import com.example.project_2nd_week.R;
-import com.example.project_2nd_week.Util;
-import com.example.project_2nd_week.databinding.ActicityLoginBinding;
-import com.example.project_2nd_week.login.signup.SignUpActivity;
+import com.example.shall_we_merge.MainActivity;
+import com.example.shall_we_merge.R;
+import com.example.shall_we_merge.ShallWeMergeAPI;
+import com.example.shall_we_merge.Util;
+import com.example.shall_we_merge.databinding.ActicityLoginBinding;
+import com.example.shall_we_merge.login.signup.SignUpActivity;
+import com.example.shall_we_merge.login.signup.TestDataClass;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,13 +36,15 @@ public class LoginActicity extends AppCompatActivity {
     private ActicityLoginBinding binding;
     private KakaoLoginLogoutManager manager = new KakaoLoginLogoutManager(this);
 
-    String url = "https://c20b-192-249-18-219.jp.ngrok.io";
+    String url = "http://192.249.18.219";
 
-     Retrofit retrofit = new Retrofit.Builder()
+    Gson gson = new GsonBuilder().setLenient().create();
+
+    Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
-     LoginAPI loginAPI = retrofit.create(LoginAPI.class);
+     ShallWeMergeAPI shallWeMergeAPI = retrofit.create(ShallWeMergeAPI.class);
 
     private LoginActicity getContext(){
         return this;
@@ -46,6 +52,9 @@ public class LoginActicity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String id = "10";
+
+
         binding = DataBindingUtil.setContentView(this, R.layout.acticity_login);
         Intent intent = new Intent(this, MainActivity.class);
 
@@ -84,18 +93,26 @@ public class LoginActicity extends AppCompatActivity {
                     binding.exceptionText.setVisibility(View.VISIBLE);
                 }
                 else{
-                    loginAPI.postAccount(binding.idEdit.getText().toString(), binding.passwordEdit.getText().toString())
-                            .enqueue(new Callback<LoginDataClass>() {
+                    LoginDataClass loginDataClass = new LoginDataClass();
+                    loginDataClass.setId(binding.idEdit.getText().toString());
+                    loginDataClass.setPassword(binding.passwordEdit.getText().toString());
+
+                    TestDataClass testDateClass = new TestDataClass("asd","sadfasdfsdfsd","YYYY/MM/DD");
+
+                    shallWeMergeAPI.addPlace(testDateClass)
+                            .enqueue(new Callback<TestDataClass>() {
                                 @Override
-                                public void onResponse(Call<LoginDataClass> call, Response<LoginDataClass> response) {
-                                    Log.d("response : ", response.toString());
+                                public void onResponse(Call<TestDataClass> call, Response<TestDataClass> response) {
+                                    Log.d("response", response.toString());
                                 }
 
                                 @Override
-                                public void onFailure(Call<LoginDataClass> call, Throwable t) {
-                                    Log.d("response : ", t.toString());
+                                public void onFailure(Call<TestDataClass> call, Throwable t) {
+                                    Log.e("response", t.toString());
+
                                 }
                             });
+
                     //if(getAccount("id") == null) {
                     //  binding.exceptionText.setText("ID를 확인해주세요");
                     //  binding.exceptionText.setVisibility(View.VISIBLE);
@@ -128,6 +145,7 @@ public class LoginActicity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
+
     }
 
 

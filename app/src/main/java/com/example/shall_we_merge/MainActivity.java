@@ -1,4 +1,4 @@
-package com.example.project_2nd_week;
+package com.example.shall_we_merge;
 
 import androidx.appcompat.app.AppCompatActivity;
 

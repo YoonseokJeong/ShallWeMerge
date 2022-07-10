@@ -1,4 +1,4 @@
-package com.example.project_2nd_week.login.signup;
+package com.example.shall_we_merge.login.signup;
 
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -14,9 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 
-import com.example.project_2nd_week.R;
-import com.example.project_2nd_week.Util;
-import com.example.project_2nd_week.databinding.ActivitySignupBinding;
+import com.example.shall_we_merge.R;
+import com.example.shall_we_merge.Util;
+import com.example.shall_we_merge.databinding.ActivitySignupBinding;
 
 public class SignUpActivity extends AppCompatActivity {
     private SignUpActivity getContext(){

@@ -1,8 +1,8 @@
-package com.example.project_2nd_week.login;
+package com.example.shall_we_merge.login;
 
 import android.app.Application;
 
-import com.example.project_2nd_week.R;
+import com.example.shall_we_merge.R;
 import com.kakao.sdk.common.KakaoSdk;
 
 public class KakaoApplication extends Application {

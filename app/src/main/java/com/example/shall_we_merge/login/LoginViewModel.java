@@ -1,4 +1,4 @@
-package com.example.project_2nd_week.login;
+package com.example.shall_we_merge.login;
 
 import androidx.lifecycle.ViewModel;
 
