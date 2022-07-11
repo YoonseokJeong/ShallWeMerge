@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="loginViewModel"
+            type="com.example.shall_we_merge.login.LoginViewModel" />
 
     </data>
 
@@ -28,6 +31,7 @@
                 android:ems="10"
                 android:hint="ID를 입력하세요."
                 android:inputType="textPersonName"
+                android:text="@={loginViewModel.id}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +45,7 @@
                 android:layout_marginBottom="16dp"
                 android:ems="10"
                 android:hint="비밀번호를 입력하세요."
+                android:text="@={loginViewModel.pw}"
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.502"

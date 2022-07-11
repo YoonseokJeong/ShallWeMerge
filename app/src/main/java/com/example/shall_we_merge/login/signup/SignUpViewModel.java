@@ -45,4 +45,23 @@ public class SignUpViewModel extends ViewModel {
     
     public LiveData<Boolean> getPwChecked() { return pwChecked; }
 
+    private  LiveData<Boolean> signUpButtonEnabled = Transformations.switchMap(pwChecked,
+            (pwChecked) -> {
+                if(pwChecked && pwValid.getValue()){
+                    return new MutableLiveData<Boolean>(true);
+                }
+                else{
+                    return new MutableLiveData<Boolean>(false);
+                }
+            });
+    public LiveData<Boolean> getSignUpButtonEnabled() { return signUpButtonEnabled; }
+
+    private MutableLiveData<Boolean> dupChecked = new MutableLiveData<Boolean>(false);
+
+    public LiveData<Boolean> getDupChecked() {
+        return dupChecked;
+    }
+    public void setDupChecked(boolean bool){
+        dupChecked.setValue(bool);
+    }
 }

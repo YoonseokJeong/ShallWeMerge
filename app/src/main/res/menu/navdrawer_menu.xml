@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/schedules"
+        android:title="일정 보기" />
+    <item
+        android:id="@+id/friends"
+        android:title="친구 보기" />
+    <item
+        android:id="@+id/logout"
+        android:title="로그아웃" />
+    <item
+        android:id="@+id/delete_account"
+        android:title="계정 삭제" />
 </menu>

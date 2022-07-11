@@ -14,10 +14,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Project_2nd_week"
+        android:theme="@style/Theme.ShallWeMerge"
         android:usesCleartextTraffic="true"
         android:name="com.example.shall_we_merge.login.KakaoApplication"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value= "AIzaSyBxqY7Y6Ux2bY-OQasVQhRoOhMPTnRMVT0" />
 
 
         <activity
@@ -56,6 +60,7 @@
         <activity
             android:name="com.example.shall_we_merge.MainActivity"
             android:exported="true">
+
         </activity>
     </application>
 

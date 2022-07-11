@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/placeholder">
-
-    <fragment android:id="@+id/placeholder" />
+    app:startDestination="@id/scheduleFragment" >
+    <fragment
+        android:id="@+id/scheduleFragment"
+        class = "com.example.shall_we_merge.schedulemanage.ScheduleListFragment"
+        android:label="fragment_schedule"
+        tools:layout="@layout/fragment_schedule" />
 </navigation>

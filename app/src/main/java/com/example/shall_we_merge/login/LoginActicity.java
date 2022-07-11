@@ -8,19 +8,25 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.shall_we_merge.MainActivity;
 import com.example.shall_we_merge.R;
-import com.example.shall_we_merge.ShallWeMergeAPI;
+import com.example.shall_we_merge.api.AccountDataClass;
+import com.example.shall_we_merge.api.ShallWeMergeAPI;
 import com.example.shall_we_merge.Util;
 import com.example.shall_we_merge.databinding.ActicityLoginBinding;
 import com.example.shall_we_merge.login.signup.SignUpActivity;
-import com.example.shall_we_merge.login.signup.TestDataClass;
+import com.example.shall_we_merge.login.signup.SignUpViewModel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,16 +41,9 @@ public class LoginActicity extends AppCompatActivity {
 
     private ActicityLoginBinding binding;
     private KakaoLoginLogoutManager manager = new KakaoLoginLogoutManager(this);
+    private LoginViewModel loginViewModel;
 
-    String url = "http://192.249.18.219";
-
-    Gson gson = new GsonBuilder().setLenient().create();
-
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(url)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build();
-     ShallWeMergeAPI shallWeMergeAPI = retrofit.create(ShallWeMergeAPI.class);
+    private ShallWeMergeAPI shallWeMergeAPI = Util.getAPI();
 
     private LoginActicity getContext(){
         return this;
@@ -52,31 +51,52 @@ public class LoginActicity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String id = "10";
-
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 
         binding = DataBindingUtil.setContentView(this, R.layout.acticity_login);
-        Intent intent = new Intent(this, MainActivity.class);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        binding.setLoginViewModel(loginViewModel);
 
         //Edit Text Input 제한
         binding.idEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10), new Util.CustomInputFilter()});
-        binding.idEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
+        binding.passwordEdit.setFilters(new InputFilter[]{new InputFilter.LengthFilter(16)});
 
 
         binding.kakaoLoginButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view){
                 manager.signInKakao();
-
             }
         });
+
+        final Observer<Boolean> emptyIdObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable final Boolean emptyId) {
+                // Update the UI, in this case, a TextView.
+                if (!emptyId) {
+                    binding.exceptionText.setVisibility(View.GONE);
+                }
+            }
+        };
+        loginViewModel.getIdEmpty().observe(getContext(), emptyIdObserver);
+
+        final Observer<Boolean> emptyPwObserver = new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable final Boolean emptyPw) {
+                // Update the UI, in this case, a TextView.
+                if (!emptyPw) {
+                    binding.exceptionText.setVisibility(View.GONE);
+                }
+            }
+        };
+        loginViewModel.getPwEmpty().observe(getContext(), emptyPwObserver);
 
         binding.toSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(getContext(), SignUpActivity.class);
-                intent.putExtra("data","Test Popup"); startActivityForResult(intent, 1);
-
+                intent.putExtra("data","Test Popup"); startActivity(intent);
             }
         });
 
@@ -93,21 +113,30 @@ public class LoginActicity extends AppCompatActivity {
                     binding.exceptionText.setVisibility(View.VISIBLE);
                 }
                 else{
-                    LoginDataClass loginDataClass = new LoginDataClass();
-                    loginDataClass.setId(binding.idEdit.getText().toString());
-                    loginDataClass.setPassword(binding.passwordEdit.getText().toString());
+                    AccountDataClass accountDataClass = new AccountDataClass(binding.idEdit.getText().toString(), binding.passwordEdit.getText().toString());
 
-                    TestDataClass testDateClass = new TestDataClass("asd","sadfasdfsdfsd","YYYY/MM/DD");
-
-                    shallWeMergeAPI.addPlace(testDateClass)
-                            .enqueue(new Callback<TestDataClass>() {
+                    shallWeMergeAPI.login(accountDataClass)
+                            .enqueue(new Callback<AccountDataClass>() {
                                 @Override
-                                public void onResponse(Call<TestDataClass> call, Response<TestDataClass> response) {
-                                    Log.d("response", response.toString());
+                                public void onResponse(Call<AccountDataClass> call, Response<AccountDataClass> response) {
+                                    Log.d("response", response.body().toString());
+                                    if(response.body().loginSuccessed()){
+                                        Toast toast = Toast.makeText(getApplicationContext(), "돌아오신 것을 환영합니다!", Toast.LENGTH_SHORT);
+                                        toast.show();
+
+                                        Intent intent = new Intent(getContext(), MainActivity.class);
+                                        ((KakaoApplication)getApplication()).setId(binding.idEdit.getText().toString());
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    else {
+                                        Toast toast = Toast.makeText(getApplicationContext(), "ID/PW를 확인해주세요.", Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
                                 }
 
                                 @Override
-                                public void onFailure(Call<TestDataClass> call, Throwable t) {
+                                public void onFailure(Call<AccountDataClass> call, Throwable t) {
                                     Log.e("response", t.toString());
 
                                 }
@@ -145,8 +174,5 @@ public class LoginActicity extends AppCompatActivity {
             }
         }
         return super.dispatchTouchEvent(ev);
-
     }
-
-
 }
