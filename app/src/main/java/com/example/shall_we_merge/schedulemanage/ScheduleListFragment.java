@@ -6,30 +6,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.shall_we_merge.R;
-import com.example.shall_we_merge.Util;
-import com.example.shall_we_merge.api.ScheduleDataClass;
-import com.example.shall_we_merge.api.ShallWeMergeAPI;
-import com.example.shall_we_merge.databinding.FragmentScheduleBinding;
+import com.example.shall_we_merge.databinding.FragmentScheduleListBinding;
 import com.example.shall_we_merge.login.KakaoApplication;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class ScheduleListFragment extends Fragment {
 
-    private FragmentScheduleBinding binding;
+    private FragmentScheduleListBinding binding;
     private ScheduleListViewModel scheduleListViewModel;
-    private String id = ((KakaoApplication)getActivity().getApplication()).getId();
 
 
     @Override
@@ -38,7 +28,9 @@ public class ScheduleListFragment extends Fragment {
         // Inflate the layout for this fragment
         super.onCreateView(inflater, container, savedInstanceState);
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_schedule, container, false);
+        Log.d("전역변수", ((KakaoApplication)getActivity().getApplication()).getId());
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_schedule_list, container, false);
 
         ScheduleListViewModelFactory factory = new ScheduleListViewModelFactory(getActivity().getApplication());
 

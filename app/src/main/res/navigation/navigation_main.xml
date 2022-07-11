@@ -2,11 +2,22 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation"
-    app:startDestination="@id/scheduleFragment" >
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/scheduleInfoFragment">
+
     <fragment
-        android:id="@+id/scheduleFragment"
-        class = "com.example.shall_we_merge.schedulemanage.ScheduleListFragment"
-        android:label="fragment_schedule"
-        tools:layout="@layout/fragment_schedule" />
+        android:id="@+id/scheduleListFragment"
+        android:name="com.example.shall_we_merge.schedulemanage.ScheduleListFragment"
+        android:label="ScheduleListFragment" />
+
+    <fragment
+        android:id="@+id/scheduleInfoFragment"
+        android:name="com.example.shall_we_merge.schedulemanage.ScheduleInfoFragment"
+        android:label="fragment_schedule_info"
+        tools:layout="@layout/fragment_schedule_info" >
+        <action
+            android:id="@+id/action_scheduleInfoFragment_to_scheduleListFragment2"
+            app:destination="@id/scheduleListFragment" />
+    </fragment>
+
 </navigation>

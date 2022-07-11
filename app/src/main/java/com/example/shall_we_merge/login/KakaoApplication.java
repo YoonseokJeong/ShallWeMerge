@@ -7,14 +7,13 @@ import com.kakao.sdk.common.KakaoSdk;
 
 public class KakaoApplication extends Application {
 
-    private String id = null;
+    private String id = "0";
     public String getId(){
         return id;
     }
     public void setId(String newId){
-        id = newId;
+        this.id = newId;
     }
-
     @Override
     public void onCreate() {
         super.onCreate();

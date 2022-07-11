@@ -23,17 +23,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/main_layout" >
 
-            <androidx.fragment.app.FragmentContainerView
+            <fragment
                 android:id="@+id/myNavHostFragment"
-                class = "com.example.shall_we_merge.schedulemanage.ScheduleListFragment"
+                android:name ="androidx.navigation.fragment.NavHostFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:navGraph="@navigation/navigation_main"
                 app:defaultNavHost="true">
 
-            </androidx.fragment.app.FragmentContainerView>
+            </fragment>
+
             <!-- TODO (04) Add a fragment tag for the titleFragment in the LinearLayout
                  Use @+id/titleFragment for the android:id
                  Use com.example.android.navigation.TitleFragment for the android:name
